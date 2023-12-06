@@ -9,7 +9,6 @@ namespace DatabaseTask.Core.Domain
     public class FoodCoupon
     {
         public int Id { get; set; }
-        public IEnumerable<Student>? Students { get; set; } = new List<Student>();
         public DateTime ExpireDate { get; set; } 
     }
 }

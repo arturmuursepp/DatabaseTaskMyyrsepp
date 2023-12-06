@@ -12,5 +12,6 @@ namespace DatabaseTask.Core.Domain
         public string Name { get; set; }
         public DateTime Vintage { get; set; }
         public IEnumerable<GroupSupervisor> GroupSupervisors { get; set; } = new List<GroupSupervisor>();
+        public IEnumerable<Student> Students { get; set; } = new List<Student>();
     }
 }

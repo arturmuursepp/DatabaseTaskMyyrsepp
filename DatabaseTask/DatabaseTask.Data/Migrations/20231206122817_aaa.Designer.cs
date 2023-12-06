@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DatabaseTask.Data.Migrations
 {
     [DbContext(typeof(DatabaseTaskDbContext))]
-    [Migration("20231025103845_abc")]
-    partial class abc
+    [Migration("20231206122817_aaa")]
+    partial class aaa
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -36,15 +36,10 @@ namespace DatabaseTask.Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("StudentId")
-                        .HasColumnType("int");
-
                     b.Property<DateTime>("Vintage")
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("StudentId");
 
                     b.ToTable("Classes");
                 });
@@ -60,7 +55,12 @@ namespace DatabaseTask.Data.Migrations
                     b.Property<DateTime>("ExpireDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<int?>("StudentId")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("StudentId");
 
                     b.ToTable("FoodCoupons");
                 });
@@ -98,7 +98,7 @@ namespace DatabaseTask.Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("salary")
+                    b.Property<int>("Salary")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -116,6 +116,9 @@ namespace DatabaseTask.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
+                    b.Property<int?>("ClassId")
+                        .HasColumnType("int");
+
                     b.Property<DateTime>("DateOfBirth")
                         .HasColumnType("datetime2");
 
@@ -125,9 +128,6 @@ namespace DatabaseTask.Data.Migrations
                     b.Property<string>("FirstMidName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("FoodCouponId")
-                        .HasColumnType("int");
 
                     b.Property<string>("GuardianPhone")
                         .IsRequired()
@@ -143,15 +143,15 @@ namespace DatabaseTask.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("FoodCouponId");
+                    b.HasIndex("ClassId");
 
                     b.ToTable("Students");
                 });
 
-            modelBuilder.Entity("DatabaseTask.Core.Domain.Class", b =>
+            modelBuilder.Entity("DatabaseTask.Core.Domain.FoodCoupon", b =>
                 {
                     b.HasOne("DatabaseTask.Core.Domain.Student", null)
-                        .WithMany("Classes")
+                        .WithMany("Foodcoupons")
                         .HasForeignKey("StudentId");
                 });
 
@@ -164,24 +164,21 @@ namespace DatabaseTask.Data.Migrations
 
             modelBuilder.Entity("DatabaseTask.Core.Domain.Student", b =>
                 {
-                    b.HasOne("DatabaseTask.Core.Domain.FoodCoupon", null)
+                    b.HasOne("DatabaseTask.Core.Domain.Class", null)
                         .WithMany("Students")
-                        .HasForeignKey("FoodCouponId");
+                        .HasForeignKey("ClassId");
                 });
 
             modelBuilder.Entity("DatabaseTask.Core.Domain.Class", b =>
                 {
                     b.Navigation("GroupSupervisors");
-                });
 
-            modelBuilder.Entity("DatabaseTask.Core.Domain.FoodCoupon", b =>
-                {
                     b.Navigation("Students");
                 });
 
             modelBuilder.Entity("DatabaseTask.Core.Domain.Student", b =>
                 {
-                    b.Navigation("Classes");
+                    b.Navigation("Foodcoupons");
                 });
 #pragma warning restore 612, 618
         }
